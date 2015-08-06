@@ -7,13 +7,21 @@ void init (void){
 	gluOrtho2D (0.0, 200.0, 0.0, 150.0);
 }
 
-void lineSegment (void){
+void bitPattern (void){
 	glClear (GL_COLOR_BUFFER_BIT);  // Clear display window.
 
-	glColor3f (0.0, 0.4, 0.2);      // Set line segment color to green.
-	glBegin (GL_LINES);
-		glVertex2i (180, 15);       // Specify line-segment geometry.
-		glVertex2i (10, 145);
+
+	glColor3i(0,0,0);
+	GLubyte bitShape [20] = {
+		0x1c, 0x00, 0x1c, 0x00, 0x1c, 0x00, 0x1c, 0x00, 0x1c, 0x00,
+		0xff, 0x80, 0x7f, 0x00, 0x3e, 0x00, 0x1c, 0x00, 0x08, 0x00};
+
+	glPixelStorei (GL_UNPACK_ALIGNMENT, 1);  // Set pixel storage mode.
+
+	glRasterPos2i (10, 10);
+	glBitmap (9, 10, 0.0, 0.0, 20.0, 15.0, bitShape);
+
+
 	glEnd ( );
 
 	glFlush ( );     // Process all OpenGL routines as quickly as possible.
@@ -27,7 +35,7 @@ int main (int argc, char* argv[]){
 	glutCreateWindow ("An Example OpenGL Program"); // Create display window.
 
 	init ( );                            // Execute initialization procedure.
-	glutDisplayFunc (lineSegment);       // Send graphics to display window.
+	glutDisplayFunc (bitPattern);       // Send graphics to display window.
 	glutMainLoop ( );                    // Display everything and wait.
 
 	return 0;
